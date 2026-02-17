@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>САМОЛёТИКИ 3000</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh; 
+        }
+
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Press Start 2P', cursive;
+            box-sizing: border-box; 
+        }
+        
+        .game-wrapper {
+            display: flex;
+            gap: 20px;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+
+            max-width: calc(800px + 300px + 60px);
+            box-sizing: border-box;
+        }
+        
+        #game-container {
+            width: 800px;
+            height: 600px;
+            border: 3px solid #444;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        
+        .shop-panel {
+            width: 300px;
+            background: #000000;
+            border: 3px solid #ffaa00;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shop-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffaa00, #ffff00, #ffaa00);
+            animation: scan 2s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .shop-header {
+            text-align: center;
+            font-size: 24px;
+            color: #ffaa00;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ffaa00;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ffaa00;
+        }
+        
+        .shop-score {
+            background: #222;
+            border: 2px solid #ffaa00;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #0f0;
+        }
+        
+        .shop-item {
+            background: #1a1a1a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shop-item:hover {
+            border-color: #ffaa00;
+            transform: scale(1.02);
+            background: #2a2a2a;
+            box-shadow: 0 0 15px #ffaa00;
+        }
+        
+        .shop-item:active {
+            transform: scale(0.98);
+        }
+        
+        .shop-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+        }
+        
+        .shop-item.disabled:hover {
+            border-color: #444;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .item-icon {
+            font-size: 32px;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-size: 14px;
+            color: #ffaa00;
+            margin-bottom: 5px;
+        }
+        
+        .item-desc {
+            font-size: 10px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        .item-price {
+            font-size: 12px;
+            color: #0f0;
+        }
+        
+        .item-level {
+            font-size: 10px;
+            color: #ffaa00;
+        }
+        
+        .shop-footer {
+            margin-top: auto;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #000;
+            border: 2px solid #ffaa00;
+            color: #0f0;
+            padding: 10px 20px;
+            font-size: 12px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-wrapper">
+        <div id="game-container"></div>
+        
+        <div class="shop-panel" id="shop-panel">
+            <div class="shop-header">
+                 МАГАЗИН 
+            </div>
+            
+            <div class="shop-score" id="shop-score">
+                КРЕДИТЫ: <span id="credit-amount">0</span> $
+            </div>
+            
+            <div id="shop-items-container">
+
+            </div>
+            
+            <div class="shop-footer">
+                НАЖИМАЙ ЧТОБЫ КУПИТЬ
+            </div>
+        </div>
+    </div>
+    
+    <div id="notification" style="display: none;"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
